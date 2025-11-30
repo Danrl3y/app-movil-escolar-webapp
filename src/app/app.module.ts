@@ -37,6 +37,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 //Ngx-cookie-service
 import { CookieService } from 'ngx-cookie-service';
 
+import { MatSortModule } from '@angular/material/sort';
+
 // Third Party Modules
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { HomeScreenComponent } from './screens/home-screen/home-screen.component';
@@ -46,6 +48,11 @@ import { AdminScreenComponent } from './screens/admin-screen/admin-screen.compon
 import { NavbarUserComponent } from './partials/navbar-user/navbar-user.component';
 import { SidebarComponent } from './partials/sidebar/sidebar.component';
 import { EliminarUserModalComponent } from './modals/eliminar-user-modal/eliminar-user-modal.component';
+import { RegistroEventosScreenComponent } from './screens/registro-eventos-screen/registro-eventos-screen.component';
+import { RegistroEventosComponent } from './partials/registro-eventos/registro-eventos.component';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { EventosScreenComponent } from './screens/eventos-screen/eventos-screen.component';
+import { EditarUserModalComponent } from './modals/editar-user-modal/editar-user-modal.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +70,11 @@ import { EliminarUserModalComponent } from './modals/eliminar-user-modal/elimina
     AdminScreenComponent,
     NavbarUserComponent,
     SidebarComponent,
-    EliminarUserModalComponent
+    EliminarUserModalComponent,
+    RegistroEventosScreenComponent,
+    RegistroEventosComponent,
+    EventosScreenComponent,
+    EditarUserModalComponent
   ],
   imports: [
     BrowserModule,
@@ -85,7 +96,9 @@ import { EliminarUserModalComponent } from './modals/eliminar-user-modal/elimina
     MatTableModule,
     MatPaginatorModule,
     MatSidenavModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSortModule,
+    NgxMaterialTimepickerModule
   ],
   providers: [
     CookieService,

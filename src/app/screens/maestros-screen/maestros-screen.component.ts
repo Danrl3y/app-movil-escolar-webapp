@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { FacadeService } from 'src/app/services/facade.service';
 import { MaestrosService } from 'src/app/services/maestros.service';
 import { EliminarUserModalComponent } from '../../modals/eliminar-user-modal/eliminar-user-modal.component';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-maestros-screen',
@@ -23,11 +24,22 @@ export class MaestrosScreenComponent implements OnInit {
   displayedColumns: string[] = ['id_trabajador', 'nombre', 'email', 'fecha_nacimiento', 'telefono', 'rfc', 'cubiculo', 'area_investigacion', 'editar', 'eliminar'];
   dataSource = new MatTableDataSource<DatosUsuario>(this.lista_maestros as DatosUsuario[]);
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-  }
+  private paginator: MatPaginator | null = null;
+    private sort: MatSort | null = null;
+  
+    @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
+      this.paginator = mp;
+      if (this.paginator) {
+        this.dataSource.paginator = this.paginator;
+      }
+    }
+  
+    @ViewChild(MatSort) set matSort(ms: MatSort) {
+      this.sort = ms;
+      if (this.sort) {
+        this.dataSource.sort = this.sort;
+      }
+    }
 
   constructor(
     public facadeService: FacadeService,
@@ -35,6 +47,15 @@ export class MaestrosScreenComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog
   ) { }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
 
   ngOnInit(): void {
     this.name_user = this.facadeService.getUserCompleteName();
@@ -66,7 +87,7 @@ export class MaestrosScreenComponent implements OnInit {
           });
           console.log("Maestros: ", this.lista_maestros);
 
-          this.dataSource = new MatTableDataSource<DatosUsuario>(this.lista_maestros as DatosUsuario[]);
+          this.dataSource.data = this.lista_maestros as DatosUsuario[];
         }
       }, (error) => {
         console.error("Error al obtener la lista de maestros: ", error);
@@ -76,17 +97,17 @@ export class MaestrosScreenComponent implements OnInit {
   }
 
   public goEditar(idUser: number) {
-    this.router.navigate(["registro-usuarios/maestros/" + idUser]);
+    this.router.navigate(["registro-usuarios/maestro/" + idUser]);
   }
 
   public delete(idUser: number) {
     // Administrador puede eliminar cualquier maestro
     // Maestro solo puede eliminar su propio registro
-    const userId = Number(this.facadeService.getUserId());
-    if (this.rol === 'administrador' || (this.rol === 'maestro' && userId === idUser)) {
+    const userIdSession = Number(this.facadeService.getUserId());
+    if (this.rol === 'administrador' || (this.rol === 'maestro' && userIdSession === idUser)) {
       //Si es administrador o es maestro, es decir, cumple la condición, se puede eliminar
       const dialogRef = this.dialog.open(EliminarUserModalComponent,{
-        data: {id: userId, rol: 'maestro'}, //Se pasan valores a través del componente
+        data: {id: idUser, rol: 'maestro'}, //Se pasan valores a través del componente
         height: '288px',
         width: '328px',
       });

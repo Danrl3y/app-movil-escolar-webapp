@@ -28,6 +28,15 @@
         <span class="material-icons">library_books</span>
         <span>Materias</span>
       </li>
+
+
+      <li routerLink="/registro-eventos-academicos" routerLinkActive="active"
+        class="scoop-navbar-item">
+        <span class="material-icons">edit_calendar</span>
+        <span>Registrar Eventos Académicos</span>
+      </li>
+
+
       <li *ngIf="canSeeTeacherItems()" routerLink="/eventos-academicos" routerLinkActive="active"
         class="scoop-navbar-item">
         <span class="material-icons">event</span>
@@ -88,6 +97,16 @@
           <span class="material-icons">library_books</span>
           <span>Materias</span>
         </li>
+
+
+        <li routerLink="/registro-eventos-academicos" routerLinkActive="active"
+          class="scoop-navbar-item">
+          <span class="material-icons">edit_calendar</span>
+          <span>Registrar Eventos Académicos</span>
+        </li>
+
+
+
         <li *ngIf="canSeeTeacherItems()" routerLink="/eventos-academicos" routerLinkActive="active"
           class="scoop-navbar-item" (click)="closeSidebar()">
           <span class="material-icons">event</span>

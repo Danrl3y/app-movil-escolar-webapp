@@ -58,11 +58,46 @@ export class RegistroMaestrosComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.maestro = this.maestrosService.esquemaMaestro();
-    // Rol del usuario
-    this.maestro.rol = this.rol;
+    //El primer if valida si existe un parámetro en la URL
+    if(this.activatedRoute.snapshot.params['id'] != undefined){
+      this.editar = true;
+      //Asignamos a nuestra variable global el valor del ID que viene por la URL
+      this.idUser = this.activatedRoute.snapshot.params['id'];
+      console.log("ID User: ", this.idUser);
+      //Al iniciar la vista asignamos los datos del user
+      this.maestro = this.datos_user;
 
-    console.log("Datos maestro: ", this.maestro);
+      if (this.maestro.materias_json && typeof this.maestro.materias_json === 'string') {
+        try {
+          // 1. Intento normal
+          this.maestro.materias_json = JSON.parse(this.maestro.materias_json);
+        } catch (e) {
+          console.warn('JSON mal formado, intentando corregir...', e);
+          
+          let jsonStringLimpio = this.maestro.materias_json.replace(/\\"/g, '"') 
+
+          if (jsonStringLimpio.startsWith('"[') && jsonStringLimpio.endsWith(']"')) {
+            jsonStringLimpio = jsonStringLimpio.substring(1, jsonStringLimpio.length - 1);
+          }
+
+          try {
+            this.maestro.materias_json = JSON.parse(jsonStringLimpio);
+            console.log('Corrección exitosa', this.maestro.materias_json);
+          } catch (e2) {
+            console.error('No se pudo recuperar el JSON de materias', e2);
+            this.maestro.materias_json = [];
+          }
+        }
+      }
+
+    }else{
+      // Si no va a this.editar, entonces inicializamos el JSON para registro nuevo
+      this.maestro = this.maestrosService.esquemaMaestro();
+      this.maestro.rol = this.rol;
+      this.token = this.facadeService.getSessionToken();
+    }
+    //Imprimir datos en consola
+    console.log("Maestro: ", this.maestro);
   }
 
   public regresar(){
@@ -103,7 +138,26 @@ export class RegistroMaestrosComponent implements OnInit {
     }
   }
   public actualizar(){
-
+    // Validación de los datos
+    this.errors = {};
+    this.errors = this.maestrosService.validarMaestro(this.maestro, this.editar);
+    if(Object.keys(this.errors).length > 0){
+      return false;
+    }
+    // Ejecutamos el servicio de actualización
+    this.maestrosService.actualizarMaestro(this.maestro).subscribe(
+      (response) => {
+        // Redirigir o mostrar mensaje de éxito
+        alert("Maestro actualizado exitosamente");
+        console.log("Maestro actualizado: ", response);
+        this.router.navigate(["maestros"]);
+      },
+      (error) => {
+        // Manejar errores de la API
+        alert("Error al actualizar maestro");
+        console.error("Error al actualizar maestro: ", error);
+      }
+    );
   }
 
   //Funciones para password
@@ -158,6 +212,7 @@ export class RegistroMaestrosComponent implements OnInit {
   }
 
   public revisarSeleccion(nombre: string){
+
     if(this.maestro.materias_json){
       var busqueda = this.maestro.materias_json.find((element)=>element==nombre);
       if(busqueda != undefined){

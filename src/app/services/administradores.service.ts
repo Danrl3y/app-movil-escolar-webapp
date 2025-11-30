@@ -155,6 +155,7 @@ export class AdministradoresService {
       headers = new HttpHeaders({ 'Content-Type': 'application/json' });
       console.log("No se encontró el token del usuario");
     }
+    console.log("Actualizando admin con data: ", data);
     return this.http.put<any>(`${environment.url_api}/admin/`, data, { headers });
   }
 
