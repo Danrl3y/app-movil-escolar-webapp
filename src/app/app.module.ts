@@ -39,6 +39,8 @@ import { CookieService } from 'ngx-cookie-service';
 
 import { MatSortModule } from '@angular/material/sort';
 
+import { NgChartsModule } from 'ng2-charts';
+
 // Third Party Modules
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { HomeScreenComponent } from './screens/home-screen/home-screen.component';
@@ -53,6 +55,7 @@ import { RegistroEventosComponent } from './partials/registro-eventos/registro-e
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { EventosScreenComponent } from './screens/eventos-screen/eventos-screen.component';
 import { EditarUserModalComponent } from './modals/editar-user-modal/editar-user-modal.component';
+import { GraficasScreenComponent } from './screens/graficas-screen/graficas-screen.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +77,8 @@ import { EditarUserModalComponent } from './modals/editar-user-modal/editar-user
     RegistroEventosScreenComponent,
     RegistroEventosComponent,
     EventosScreenComponent,
-    EditarUserModalComponent
+    EditarUserModalComponent,
+    GraficasScreenComponent
   ],
   imports: [
     BrowserModule,
@@ -98,7 +102,8 @@ import { EditarUserModalComponent } from './modals/editar-user-modal/editar-user
     MatSidenavModule,
     MatDialogModule,
     MatSortModule,
-    NgxMaterialTimepickerModule
+    NgxMaterialTimepickerModule,
+    NgChartsModule
   ],
   providers: [
     CookieService,
