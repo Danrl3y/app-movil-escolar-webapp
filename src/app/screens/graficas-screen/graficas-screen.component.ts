@@ -11,6 +11,14 @@ export class GraficasScreenComponent implements OnInit{
 
   //Agregar chartjs-plugin-datalabels
   //Variables
+  labels: any = [];
+  data: any = [];
+
+  public showCharts: boolean = false;
+
+  ngOnInit(): void {
+    this.obtenerTotalUsers();
+  }
 
   public total_user: any = {};
 
@@ -96,16 +104,32 @@ export class GraficasScreenComponent implements OnInit{
     private administradoresServices: AdministradoresService
   ) { }
 
-  ngOnInit(): void {
-    this.obtenerTotalUsers();
-  }
-
   // Función para obtener el total de usuarios registrados
   public obtenerTotalUsers(){
     this.administradoresServices.getTotalUsuarios().subscribe(
       (response)=>{
         this.total_user = response;
+        this.labels = Object.keys(this.total_user);
+        this.data = Object.values(this.total_user);
         console.log("Total usuarios: ", this.total_user);
+        console.log("Labels: ", this.labels);
+        console.log("Data: ", this.data);
+
+        this.lineChartData['labels'] = this.labels;
+        this.lineChartData['datasets'][0]['data'] = this.data;
+
+        this.barChartData['labels'] = this.labels;
+        this.barChartData['datasets'][0]['data'] = this.data;
+        
+        this.pieChartData['labels'] = this.labels;
+        this.pieChartData['datasets'][0]['data'] = this.data;
+
+        this.doughnutChartData['labels'] = this.labels;
+        this.doughnutChartData['datasets'][0]['data'] = this.data;
+
+        this.showCharts = true;
+        console.log("Charts actualizados");
+
       }, (error)=>{
         console.log("Error al obtener total de usuarios ", error);
 
