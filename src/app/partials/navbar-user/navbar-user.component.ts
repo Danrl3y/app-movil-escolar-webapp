@@ -2,6 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FacadeService } from 'src/app/services/facade.service';
 
+
 @Component({
   selector: 'app-navbar-user',
   templateUrl: './navbar-user.component.html',

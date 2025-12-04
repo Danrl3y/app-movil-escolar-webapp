@@ -378,3 +378,82 @@
   font-size: 1.08rem;
   padding: 1rem 1.2rem;
 }
+
+// =====================
+// ANGULAR MATERIAL OVERRIDES
+// =====================
+
+// 1. Quitar fondo blanco y bordes del panel
+::ng-deep .scoop-expansion-panel.mat-expansion-panel {
+  background: transparent !important;
+  color: #e4ecfa;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+// 2. Estilizar el Header para que parezca un scoop-navbar-item
+::ng-deep .scoop-expansion-header.mat-expansion-panel-header {
+  font-family: inherit;
+  font-size: 1.08rem;
+  padding: 1rem 1.2rem !important;
+  height: auto !important; /* Permitir que se ajuste */
+  border-radius: 8px;
+  transition: background 0.18s;
+  
+  // Alinear icono y texto
+  .mat-expansion-panel-header-title {
+    color: #e4ecfa;
+    display: flex;
+    align-items: center;
+    margin-right: 0;
+  }
+
+  // Estilo del icono principal
+  .material-icons {
+    margin-right: 0.7rem;
+    font-size: 1.2em;
+    color: #b5c6e0; 
+  }
+
+  // Efecto Hover igual al de tus items
+  &:hover {
+    background: #30507a !important;
+    
+    .material-icons, .mat-expansion-panel-header-title {
+      color: #fff;
+    }
+  }
+}
+
+// 3. Cambiar color de la flechita (indicador)
+::ng-deep .scoop-expansion-panel .mat-expansion-indicator::after {
+  color: #b5c6e0 !important;
+}
+
+// 4. Estilos del contenido desplegado (Sub-items)
+::ng-deep .mat-expansion-panel-body {
+  padding: 0 !important; /* Quitar padding por defecto de Material */
+  margin-top: 5px;
+}
+
+.scoop-sub-item {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #b5c6e0;
+  padding: 0.8rem 1rem 0.8rem 2.5rem; /* Sangría a la izquierda para jerarquía */
+  font-size: 0.95rem;
+  border-radius: 8px;
+  transition: all 0.2s;
+  cursor: pointer;
+
+  .material-icons {
+    font-size: 1.1rem;
+    margin-right: 10px;
+  }
+
+  &:hover, &.active {
+    color: #fff;
+    background: rgba(48, 80, 122, 0.4); /* Un poco más claro que el hover principal */
+  }
+}

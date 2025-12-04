@@ -19,8 +19,9 @@ export class EventosScreenComponent {
   public rol: string = "";
   public token: string = "";
   public lista_eventos: any[] = [];
+  private isAdmin: boolean = false;
 
-  displayedColumns: string[] = ['nombre', 'tipo', 'fecha', 'hora_inicio', 'hora_fin', 'lugar', 'publico_objetivo', 'programa_educativo', 'responsable', 'descripcion', 'cupo_max', 'editar', 'eliminar'];
+  displayedColumns: string[];
   dataSource = new MatTableDataSource<DatosEvento>(this.lista_eventos as DatosEvento[]);
   
   private paginator: MatPaginator | null = null;
@@ -63,6 +64,16 @@ export class EventosScreenComponent {
       this.router.navigate(["/"]);
     }
     this.obtenerEventos();
+
+    this.isAdmin = this.rol === 'administrador';
+    if (this.isAdmin) {
+    
+      this.displayedColumns = ['nombre', 'tipo', 'fecha', 'hora_inicio', 'hora_fin', 'lugar', 'publico_objetivo', 'programa_educativo', 'responsable', 'descripcion', 'cupo_max', 'editar', 'eliminar'];
+      
+    } else {
+      this.displayedColumns = ['nombre', 'tipo', 'fecha', 'hora_inicio', 'hora_fin', 'lugar', 'publico_objetivo', 'programa_educativo', 'responsable', 'descripcion', 'cupo_max'];
+    }
+
   }
 
   public obtenerEventos() {

@@ -28,6 +28,9 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatTableModule} from '@angular/material/table';
 import {MatDialogModule} from '@angular/material/dialog';
 
+import { MatMenuModule } from '@angular/material/menu';
+import { MatExpansionModule } from '@angular/material/expansion';
+
 // Paginación
 import {MatPaginatorIntl, MatPaginatorModule} from '@angular/material/paginator';
 //Para el paginator en español
@@ -103,7 +106,9 @@ import { GraficasScreenComponent } from './screens/graficas-screen/graficas-scre
     MatDialogModule,
     MatSortModule,
     NgxMaterialTimepickerModule,
-    NgChartsModule
+    NgChartsModule,
+    MatMenuModule,
+    MatExpansionModule
   ],
   providers: [
     CookieService,

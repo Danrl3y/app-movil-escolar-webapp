@@ -30,18 +30,33 @@
       </li>
 
 
-      <li routerLink="/registro-eventos-academicos" routerLinkActive="active"
-        class="scoop-navbar-item">
-        <span class="material-icons">edit_calendar</span>
-        <span>Registrar Eventos Académicos</span>
-      </li>
+      <li>
+          <mat-accordion>
+            <mat-expansion-panel class="scoop-expansion-panel mat-elevation-z0">
+              
+              <mat-expansion-panel-header class="scoop-expansion-header">
+                <mat-panel-title>
+                  <span class="material-icons">event</span>
+                  <span>Eventos Académicos</span>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
 
+              <div class="nav-sub-menu">
+                <a *ngIf="isAdmin()" routerLink="/registro-eventos-academicos" routerLinkActive="active" class="scoop-sub-item">
+                  <span class="material-icons">edit_calendar</span>
+                  <span>Registrar</span>
+                </a>
 
-      <li *ngIf="canSeeTeacherItems()" routerLink="/eventos-academicos" routerLinkActive="active"
-        class="scoop-navbar-item">
-        <span class="material-icons">event</span>
-        <span>Eventos Académicos</span>
-      </li>
+                <a *ngIf="canSeeStudentItems()" (click)="closeSidebar()" routerLink="/eventos-academicos" routerLinkActive="active" class="scoop-sub-item">
+                  <span class="material-icons">list</span>
+                  <span>Ver lista</span>
+                </a>
+              </div>
+
+            </mat-expansion-panel>
+          </mat-accordion>
+        </li>
+
     </ul>
     <button class="scoop-logout-btn" (click)="logout()">
       <span class="material-icons">logout</span>
@@ -98,19 +113,31 @@
           <span>Materias</span>
         </li>
 
+        <li>
+          <mat-accordion>
+            <mat-expansion-panel class="scoop-expansion-panel mat-elevation-z0">
+              
+              <mat-expansion-panel-header class="scoop-expansion-header">
+                <mat-panel-title>
+                  <span class="material-icons">event</span>
+                  <span>Eventos Académicos</span>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
 
-        <li routerLink="/registro-eventos-academicos" routerLinkActive="active"
-          class="scoop-navbar-item">
-          <span class="material-icons">edit_calendar</span>
-          <span>Registrar Eventos Académicos</span>
-        </li>
+              <div class="nav-sub-menu">
+                <a *ngIf="isAdmin()" routerLink="/registro-eventos-academicos" routerLinkActive="active" class="scoop-sub-item">
+                  <span class="material-icons">edit_calendar</span>
+                  <span>Registrar</span>
+                </a>
 
+                <a *ngIf="canSeeStudentItems()" (click)="closeSidebar()" routerLink="/eventos-academicos" routerLinkActive="active" class="scoop-sub-item">
+                  <span class="material-icons">list</span>
+                  <span>Ver lista</span>
+                </a>
+              </div>
 
-
-        <li *ngIf="canSeeTeacherItems()" routerLink="/eventos-academicos" routerLinkActive="active"
-          class="scoop-navbar-item" (click)="closeSidebar()">
-          <span class="material-icons">event</span>
-          <span>Eventos Académicos</span>
+            </mat-expansion-panel>
+          </mat-accordion>
         </li>
       </ul>
       <button class="scoop-logout-btn" (click)="logout(); closeSidebar()">

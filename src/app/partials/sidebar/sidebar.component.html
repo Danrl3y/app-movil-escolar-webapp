@@ -40,11 +40,31 @@
         </li>
 
         <!-- Eventos Académicos - Available for administrators and teachers -->
-        <li *ngIf="canSeeTeacherItems()" routerLink="/eventos-academicos" routerLinkActive="active"
-          class="eventos-academicos" (click)="closeSidebar()">
-          <mat-icon>event</mat-icon>
-          <span>Eventos Académicos</span>
-        </li>
+        
+        <mat-accordion>
+        <mat-expansion-panel class="mat-elevation-z0"> <mat-expansion-panel-header>
+            <mat-panel-title>
+              <mat-icon>event</mat-icon>
+              <span style="margin-left: 10px;">Eventos Académicos</span>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="nav-sub-menu">
+            
+            <a mat-list-item routerLink="/registro-eventos-academicos" routerLinkActive="active">
+              <mat-icon>edit_calendar</mat-icon>
+              <span>Registrar</span>
+            </a>
+
+            <a mat-list-item *ngIf="canSeeTeacherItems()" routerLink="/eventos-academicos" routerLinkActive="active">
+              <mat-icon>list</mat-icon>
+              <span>Ver lista</span>
+            </a>
+          </div>
+
+        </mat-expansion-panel>
+      </mat-accordion>
+
       </ul>
       <button mat-flat-button color="warn" class="logout-btn" (click)="logout()">
         <mat-icon>logout</mat-icon>
