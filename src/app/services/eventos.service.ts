@@ -121,8 +121,8 @@ export class EventosService {
       else if (cupo <= 0) {
         error["cupo_max"] = "El cupo debe ser mayor a 0";
       }
-      else if (cupo > 300) {
-        error["cupo_max"] = "El cupo no puede exceder los 300 participantes";
+      else if (cupo > 999) {
+        error["cupo_max"] = "El cupo no puede exceder los 999 participantes";
       }
     }
 
